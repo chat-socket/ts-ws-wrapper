@@ -10,7 +10,7 @@ export interface IListenerCollectionItem {
   once: boolean;
 }
 export type WrappedListenerFn = (event: QueryEvent) => void;
-export type ListenerFn = (...args: any[]) => void;
+export type ListenerFn = (...args: any[]) => void | any;
 export type SendResponseFn = (...args: any[]) => void;
 // export type WrappedListeners = WeakMap<ListenerFn, IWrappedListenerFn>;
 

@@ -5,10 +5,10 @@ export interface IWebsocket {
   CONNECTING: number;
   OPEN: number;
   send: (event?: any) => void;
-  onopen: (event?: any) => void;
-  onmessage: (event: any) => void;
-  onerror: (event: any) => void;
-  onclose: (event: any) => void;
+  onclose: ((this: WebSocket, ev: any) => any) | null;
+  onerror: ((this: WebSocket, ev: any) => any) | null;
+  onmessage: ((this: WebSocket, ev: any) => any) | null;
+  onopen: ((this: WebSocket, ev: any) => any) | null;
   close: () => void;
 }
 

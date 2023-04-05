@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as http from "http";
 import * as Koa from "koa";
 import * as Router from "koa-router";
-import WebSocket, { Server as WebSocketServer } from "ws";
+import * as wslib from 'ws';
 import WebSocketWrapper from "../lib/WebSocketWrapper";
 import { IMessage } from './interfaces';
 
@@ -13,7 +13,7 @@ const tsify = require("tsify");
 const app = new Koa();
 const router = new Router();
 const server = http.createServer(app.callback());
-const socketServer = new WebSocketServer({ server });
+const socketServer = new wslib.WebSocketServer({ server });
 const PORT = process.env.PORT || 3000;
 
 // Save all connected `sockets`

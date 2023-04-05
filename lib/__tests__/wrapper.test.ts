@@ -35,7 +35,7 @@ describe("WebSocketWrapper", () => {
     expect(() => new WebSocketWrapper(new WebSocket("ws://localhost:8080"))).not.toThrow();
   });
 
-  it.skip("initialise with debug option set to true", async done => {
+  it.skip("initialise with debug option set to true", () => {
     // console.log = jest.fn();
     // const wswDebug = new WebSocketWrapper(new WebSocket("ws://test"), {
     //   debug: true
@@ -46,7 +46,7 @@ describe("WebSocketWrapper", () => {
     // }, 100);
   });
 
-  it.skip("initialise with debug option set to function", async done => {
+  it.skip("initialise with debug option set to function", () => {
     // const debug = jest.fn();
     // const wswDebug = new WebSocketWrapper(new WebSocket("ws://test"), {
     //   debug
