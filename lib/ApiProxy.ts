@@ -10,7 +10,7 @@ export default abstract class ApiProxy implements IChannel {
   public once(eventName: string, listener: ListenerFn): Channel {
     return this.channelHandler.defaultChannel.once(eventName, listener);
   }
-  public removeListener(eventName: string, listener: ListenerFn): Channel {
+  public removeListener(eventName: string, listener?: ListenerFn): Channel {
     return this.channelHandler.defaultChannel.removeListener(eventName, listener);
   }
   public removeAllListeners(eventName?: string): Channel {

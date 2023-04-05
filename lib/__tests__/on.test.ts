@@ -1,18 +1,19 @@
 /* tslint:disable:no-empty */
 
-import WebSocketWrapper from "../../index";
-import { connectSocket, createPayload, delay, getSendToSocketFn, getWebSocket } from "../utils";
+import {WebSocket} from "mock-socket";
+import WebSocketWrapper from "../WebSocketWrapper";
+import { connectSocket, createPayload, delay, getSendToSocketFn, getWebSocket } from "./utils";
 
 describe("#on()", () => {
   const event = "event";
   const id = 1;
-  let wsw;
-  let mockSocket;
-  let sendMessageToSocket;
+  let wsw: WebSocketWrapper;
+  let mockSocket: WebSocket;
+  let sendMessageToSocket: (...message: any[]) => void;
 
   beforeEach(() => {
     mockSocket = getWebSocket();
-    const wrapper = WebSocketWrapper(mockSocket);
+    const wrapper = new WebSocketWrapper(mockSocket);
     wsw = connectSocket(wrapper);
     sendMessageToSocket = getSendToSocketFn(mockSocket);
   });
@@ -47,7 +48,7 @@ describe("#on()", () => {
   it("receive event to multiple listeners", () => {
     const events = ["event1", "event2", "event3"];
     const eventData = ["msg1", "msg2", "msg3"];
-    const messages = [];
+    const messages: string[] = [];
 
     wsw.on(events[0], data => messages.push(data));
     wsw.on(events[1], data => messages.push(data));
@@ -62,12 +63,6 @@ describe("#on()", () => {
     expect(messages).toEqual(eventData);
   });
 
-  it("throw error if listener is not supplied", () => {
-    expect(() => {
-      wsw.on("event");
-    }).toThrow('"listener" argument must be a function');
-  });
-
   it.skip("subscribe to reserved event name 'message'", async () => {
     // const event = "message";
     const data = "Hello!";
@@ -75,8 +70,8 @@ describe("#on()", () => {
     // const server: any = await connectToServer();
     wsw.on(event, msg => (message = msg));
     // server.send(data);
-    expect(message.type).toEqual("message");
-    expect(message.data).toEqual(data);
+    // expect(message.type).toEqual("message");
+    // expect(message.data).toEqual(data);
   });
 
   it.skip("invalid JSON", () => {

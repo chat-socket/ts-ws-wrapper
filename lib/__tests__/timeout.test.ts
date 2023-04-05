@@ -1,19 +1,20 @@
 /* tslint:disable:no-empty */
 
-import WebSocketWrapper from "../../index";
-import { connectSocket, createPayload, delay, getSendToSocketFn, getWebSocket } from "../utils";
+import {WebSocket} from "mock-socket";
+import WebSocketWrapper from "../WebSocketWrapper";
+import { connectSocket, createPayload, delay, getSendToSocketFn, getWebSocket } from "./utils";
 
 describe("#timeout()", () => {
   const event = "event";
   const channel = "channel";
   const id = 1;
-  let wsw;
-  let mockSocket;
-  let sendMessageToSocket;
+  let wsw: WebSocketWrapper;
+  let mockSocket: WebSocket;
+  let sendMessageToSocket: (message: any) => void;
 
   beforeEach(() => {
     mockSocket = getWebSocket();
-    const wrapper = WebSocketWrapper(mockSocket);
+    const wrapper = new WebSocketWrapper(mockSocket);
     wsw = connectSocket(wrapper);
     sendMessageToSocket = getSendToSocketFn(mockSocket);
   });

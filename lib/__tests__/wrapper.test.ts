@@ -1,7 +1,7 @@
 /* tslint:disable:no-empty */
 /* tslint:disable:curly */
 
-const { Server, WebSocket } = require("mock-socket");
+import { WebSocket } from 'mock-socket';
 import WebSocketWrapper from "../WebSocketWrapper";
 import { connectSocket, createPayload, delay, getSendToSocketFn, getWebSocket } from "./utils";
 
@@ -13,9 +13,9 @@ import { connectSocket, createPayload, delay, getSendToSocketFn, getWebSocket } 
 // }
 
 describe("WebSocketWrapper", () => {
-  let wsw;
-  let mockSocket;
-  let sendMessageToSocket;
+  let wsw: WebSocketWrapper;
+  let mockSocket: WebSocket;
+  let sendMessageToSocket: (message: any) => void;
 
   beforeEach(() => {
     // mockServer = new Server("ws://test");
@@ -68,7 +68,7 @@ describe("WebSocketWrapper", () => {
   });
 
   describe("public properties", () => {
-    let wrapper;
+    let wrapper: WebSocketWrapper;
 
     beforeEach(() => {
       wrapper = new WebSocketWrapper(getWebSocket());
@@ -89,7 +89,7 @@ describe("WebSocketWrapper", () => {
 
   describe("#send()", () => {
     let socket;
-    let wrapper;
+    let wrapper: WebSocketWrapper;
 
     beforeEach(() => {
       socket = getWebSocket();
@@ -106,7 +106,7 @@ describe("WebSocketWrapper", () => {
       const maxSize = 10;
       expect(() => {
         for (let index = 0; index <= maxSize; index++) {
-          wrapper.send();
+          wrapper.send(index);
         }
       }).toThrow(/WebSocket is not connected and send queue is full/);
     });
@@ -122,8 +122,8 @@ describe("WebSocketWrapper", () => {
   });
 
   describe("#abort()", () => {
-    let socket;
-    let wrapper;
+    let socket: WebSocket;
+    let wrapper: WebSocketWrapper;
 
     beforeEach(() => {
       socket = getWebSocket();

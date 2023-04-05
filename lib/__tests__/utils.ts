@@ -1,7 +1,7 @@
 /* tslint:disable:no-empty */
 /* tslint:disable:curly */
 
-const { WebSocket } = require("mock-socket");
+import { WebSocket } from 'mock-socket';
 
 export interface ICreatePayloadOptions {
   data?: any[];
@@ -39,10 +39,6 @@ export const createPayload = (options: ICreatePayloadOptions, sendJSON: boolean 
 
 export const getWebSocket = (wsAddress: string = "ws://test"): WebSocket => {
   const mock = new WebSocket(wsAddress);
-  mock.CONNECTING = 0;
-  mock.OPEN = 1;
-  mock.CLOSING = 2;
-  mock.CLOSED = 3;
   mock.send = jest.fn();
   mock.close = jest.fn();
   return mock;
@@ -52,7 +48,7 @@ export const getSendToSocketFn = (mockSocket: WebSocket) => {
   return (...messages: ICreatePayloadOptions[]): void => {
     messages.forEach(msg => {
       const payload = createPayload(msg);
-      (mockSocket.onmessage as any)[0]({ data: payload });
+      (mockSocket.onmessage as any)({ data: payload });
     });
   };
 };
@@ -66,6 +62,6 @@ export const delay = (clb: () => void, done?: () => void) => {
 
 export const connectSocket = (wrapper: any) => {
   wrapper.socketConnection.webSocket.readyState = 1;
-  wrapper.socketConnection.webSocket.onopen[0]();
+  wrapper.socketConnection.webSocket.onopen();
   return wrapper;
 };

@@ -12,3 +12,4 @@ tsconfig.json
 tsconfig.publish.json
 tslint.json
 typings.d.ts
+.idea
