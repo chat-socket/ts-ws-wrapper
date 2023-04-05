@@ -1,6 +1,5 @@
 import ApiProxy from "./ApiProxy";
 import AwaitingResponseHandler from "./AwaitingResponseHandler";
-import Channel from "./Channel";
 import ChannelHandler from "./ChannelHandler";
 import Debug from "./Debug";
 import EventFactory, { IsQueryEvent, IsResponseEvent } from "./EventFactory";
@@ -19,7 +18,7 @@ export default class WebSocketWrapper extends ApiProxy {
   private socketConnection: SocketConnection;
   private awaitingResponseHandler = new AwaitingResponseHandler();
 
-  constructor(socket: WebSocket, options: IConstructorOptions = {}) {
+  constructor(socket: WebSocket | null, options: IConstructorOptions = {}) {
     super();
 
     options = options || {};
@@ -33,7 +32,9 @@ export default class WebSocketWrapper extends ApiProxy {
       this.sendEvent.bind(this)
     );
 
-    this.bind(socket);
+    if (socket != null) {
+      this.bind(socket);
+    }
   }
 
   get isConnecting() {
